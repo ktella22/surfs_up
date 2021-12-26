@@ -2,14 +2,15 @@ import datetime as dt
 import numpy as np
 import pandas as pd
 
-# SQLAlchemy dependencies
+# # SQLAlchemy dependencies
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session, session
+from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
 # Import Flask 
 from flask import Flask, jsonify
+app = Flask(__name__)
 
 # Set Up the Database
 engine = create_engine("sqlite:///hawaii.sqlite")
@@ -92,4 +93,7 @@ def stats(start=None, end=None):
         filter(Measurement.date >= start).\
         filter(Measurement.date <= end).all()
     temps = list(np.ravel(results))
-    return jsonify(temps=temps)
+    return jsonify(temps=temps) 
+
+if __name__ == "__main__":
+    app.run(debug=True)
